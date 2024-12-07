@@ -33,10 +33,10 @@ tasks.test {
 	}
 
 	val outputDir = reports.junitXml.outputLocation
-	jvmArgumentProviders += CommandLineArgumentProvider {
+	jvmArgumentProviders.add(CommandLineArgumentProvider {
 		listOf(
 			"-Djunit.platform.reporting.open.xml.enabled=true",
 			"-Djunit.platform.reporting.output.dir=${outputDir.get().asFile.absolutePath}"
 		)
-	}
+	})
 }

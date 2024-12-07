@@ -28,15 +28,16 @@ publishing.publications.named<MavenPublication>("maven") {
 
 tasks.withType<GenerateMavenPom>().configureEach {
 	doLast {
-		val xml = destination.readText()
+		val destinationFile = destination.asFile.get()
+		val xml = destinationFile.readText()
 		require(xml.indexOf("<dependencies>") == xml.lastIndexOf("<dependencies>")) {
-			"BOM must contain exactly one <dependencies> element but contained multiple:\n$destination"
+			"BOM must contain exactly one <dependencies> element but contained multiple:\n$destinationFile"
 		}
 		require(xml.contains("<dependencyManagement>")) {
-			"BOM must contain a <dependencyManagement> element:\n$destination"
+			"BOM must contain a <dependencyManagement> element:\n$destinationFile"
 		}
 		require(!xml.contains("<scope>")) {
-			"BOM must not contain <scope> elements:\n$destination"
+			"BOM must not contain <scope> elements:\n$destinationFile"
 		}
 	}
 }

@@ -11,6 +11,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
+import org.gradle.kotlin.dsl.assign
 import org.gradle.process.CommandLineArgumentProvider
 import org.gradle.process.ExecOperations
 import java.nio.file.Files

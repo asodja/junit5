@@ -16,7 +16,7 @@ configurations {
 			outgoing {
 				artifacts.clear()
 				artifact(tasks.shadowJar) {
-					classifier = ""
+					classifier = null
 				}
 			}
 		}
@@ -46,16 +46,16 @@ idea {
 
 tasks {
 	javadoc {
-		classpath += shadowedClasspath.get()
+		classpath.from(shadowedClasspath.get())
 	}
 	checkstyleMain {
-		classpath += shadowedClasspath.get()
+		classpath.from(shadowedClasspath.get())
 	}
 	shadowJar {
 		configurations = listOf(shadowedClasspath.get())
 		exclude("META-INF/maven/**")
 		excludes.remove("module-info.class")
-		archiveClassifier = ""
+		archiveClassifier = null
 	}
 	jar {
 		dependsOn(shadowJar)
@@ -68,8 +68,8 @@ tasks {
 	test {
 		dependsOn(shadowJar)
 		// in order to run the test against the shadowJar
-		classpath -= sourceSets.main.get().output
-		classpath += files(shadowJar.map { it.archiveFile })
+		classpath = classpath.minus(sourceSets.main.get().output)
+		classpath.from(files(shadowJar.map { it.archiveFile }))
 	}
 	named<JavaCompile>("compileModule") {
 		the<ModuleCompileOptions>().modulePath.from(shadowedClasspath.get())

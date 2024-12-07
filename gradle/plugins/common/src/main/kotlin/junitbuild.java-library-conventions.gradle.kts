@@ -85,7 +85,7 @@ if (project in mavenizedProjects) {
 	}
 
 	tasks.named<Jar>("javadocJar").configure {
-		from(tasks.javadoc.map { File(it.destinationDir, "element-list") }) {
+		from(tasks.javadoc.map { File(it.destinationDir.asFile.get(), "element-list") }) {
 			// For compatibility with older tools, e.g. NetBeans 11
 			rename { "package-list" }
 		}
@@ -196,7 +196,7 @@ val compileModule by tasks.registering(JavaCompile::class) {
 	modularity.inferModulePath = false
 
 	doFirst {
-		options.allCompilerArgs.forEach {
+		options.allCompilerArgs.get().forEach {
 			logger.info(it)
 		}
 	}

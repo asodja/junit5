@@ -239,13 +239,13 @@ tasks {
 	val generateApiTables by registering(JavaExec::class) {
 		classpath = tools.runtimeClasspath
 		mainClass = "org.junit.api.tools.ApiReportGenerator"
-		jvmArgumentProviders += ClasspathSystemPropertyProvider("api.classpath", apiReportClasspath.get())
-		argumentProviders += CommandLineArgumentProvider {
+		jvmArgumentProviders.add(ClasspathSystemPropertyProvider("api.classpath", apiReportClasspath.get()))
+		argumentProviders.add(CommandLineArgumentProvider {
 			listOf(
 				"DEPRECATED=${deprecatedApisTableFile.get().asFile.absolutePath}",
 				"EXPERIMENTAL=${experimentalApisTableFile.get().asFile.absolutePath}",
 			)
-		}
+		})
 		outputs.cacheIf { true }
 		outputs.file(deprecatedApisTableFile)
 		outputs.file(experimentalApisTableFile)
@@ -459,7 +459,7 @@ tasks {
 		})
 		classpath = files(modularProjects.map { it.sourceSets.main.get().compileClasspath })
 
-		setMaxMemory("1024m")
+		maxMemory = "1024m"
 		options.destinationDirectory = layout.buildDirectory.dir("docs/javadoc").get().asFile
 
 		doFirst {
@@ -472,7 +472,7 @@ tasks {
 		group = "Documentation"
 		description = "Fix links to external API specs in the locally aggregated Javadoc HTML files"
 
-		val inputDir = aggregateJavadocs.map { it.destinationDir!! }
+		val inputDir = aggregateJavadocs.flatMap { it.destinationDir.asFile }
 		inputs.property("externalModulesWithoutModularJavadoc", externalModulesWithoutModularJavadoc)
 		from(inputDir.map { File(it, "element-list") }) {
 			// For compatibility with pre JDK 10 versions of the Javadoc tool

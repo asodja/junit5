@@ -16,6 +16,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.gradle.jvm.toolchain.JavaLauncher
 import org.gradle.jvm.toolchain.JavaToolchainService
+import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.the
 import org.gradle.process.CommandLineArgumentProvider
@@ -73,7 +74,7 @@ abstract class RunConsoleLauncher @Inject constructor(private val execOperations
             args(this@RunConsoleLauncher.commandLineArgs.get())
             argumentProviders.addAll(this@RunConsoleLauncher.argumentProviders.get())
             systemProperty("java.util.logging.manager", "org.apache.logging.log4j.jul.LogManager")
-            debug = debugging.get()
+            debug = debugging
             if (hideOutput.get()) {
                 standardOutput = output
                 errorOutput = output

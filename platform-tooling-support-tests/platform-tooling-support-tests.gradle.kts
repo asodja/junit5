@@ -140,13 +140,13 @@ tasks.test {
 	// is not executed.
 	if (enabled) {
 		dependsOn(normalizeMavenRepo)
-		jvmArgumentProviders += MavenRepo(project, normalizeMavenRepo.map { it.destinationDir })
+		jvmArgumentProviders.add(MavenRepo(project, normalizeMavenRepo.map { it.destinationDir }))
 	}
 	environment.remove("JAVA_TOOL_OPTIONS")
 
-	jvmArgumentProviders += JarPath(project, thirdPartyJarsClasspath.get(), "thirdPartyJars")
-	jvmArgumentProviders += JarPath(project, antJarsClasspath.get(), "antJars")
-	jvmArgumentProviders += MavenDistribution(project, unzipMavenDistribution, mavenDistributionDir)
+	jvmArgumentProviders.add(JarPath(project, thirdPartyJarsClasspath.get(), "thirdPartyJars"))
+	jvmArgumentProviders.add(JarPath(project, antJarsClasspath.get(), "antJars"))
+	jvmArgumentProviders.add(MavenDistribution(project, unzipMavenDistribution, mavenDistributionDir))
 
 	if (buildParameters.javaToolchain.version.getOrElse(21) < 24) {
 		(options as JUnitPlatformOptions).apply {
@@ -172,10 +172,10 @@ tasks.test {
 			preferredMaxDuration = Duration.ofMillis(500)
 		}
 	}
-	jvmArgumentProviders += JavaHomeDir(project, 8, develocity.testDistribution.enabled)
+	jvmArgumentProviders.add(JavaHomeDir(project, 8, develocity.testDistribution.enabled))
 
 	val gradleJavaVersion = JavaVersion.current().majorVersion.toInt()
-	jvmArgumentProviders += JavaHomeDir(project, gradleJavaVersion, develocity.testDistribution.enabled)
+	jvmArgumentProviders.add(JavaHomeDir(project, gradleJavaVersion, develocity.testDistribution.enabled))
 	systemProperty("gradle.java.version", gradleJavaVersion)
 }
 

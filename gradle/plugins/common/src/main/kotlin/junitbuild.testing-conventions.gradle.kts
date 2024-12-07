@@ -123,16 +123,16 @@ tasks.withType<Test>().configureEach {
 		environment.remove("GITHUB_ACTION")
 	}
 
-	jvmArgumentProviders += CommandLineArgumentProvider {
+	jvmArgumentProviders.add(CommandLineArgumentProvider {
 		listOf(
 			"-Djunit.platform.reporting.open.xml.enabled=true",
 			"-Djunit.platform.reporting.output.dir=${reports.junitXml.outputLocation.get().asFile.absolutePath}/junit-{uniqueNumber}",
 		)
-	}
+	})
 
-	jvmArgumentProviders += objects.newInstance(JavaAgentArgumentProvider::class).apply {
+	jvmArgumentProviders.add(objects.newInstance(JavaAgentArgumentProvider::class).apply {
 		classpath.from(javaAgentClasspath)
-	}
+	})
 
 	val reportDirTree = objects.fileTree().from(reports.junitXml.outputLocation)
 	doFirst {
