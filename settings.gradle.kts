@@ -52,14 +52,14 @@ develocity {
 
 buildCache {
 	local {
-		isEnabled = !buildParameters.ci
+		enabled = !buildParameters.ci
 	}
 	val buildCacheServer = buildParameters.junit.develocity.buildCache.server
 	if (useDevelocityInstance) {
 		remote(develocity.buildCache) {
 			server = buildCacheServer.orNull
 			val authenticated = !System.getenv("DEVELOCITY_ACCESS_KEY").isNullOrEmpty()
-			isPush = buildParameters.ci && authenticated
+			push = buildParameters.ci && authenticated
 		}
 	} else {
 		remote<HttpBuildCache> {

@@ -217,7 +217,10 @@ val test by testing.suites.getting(JvmTestSuite::class) {
 					dependsOn(normalizeMavenRepo)
 					jvmArgumentProviders += MavenRepo(project, normalizeMavenRepo.map { it.destinationDir })
 				}
-				environment.remove("JAVA_TOOL_OPTIONS")
+				val env = mutableMapOf<String, Any>()
+				env.putAll(environment.get())
+				env.remove("JAVA_TOOL_OPTIONS")
+				environment.set(env)
 
 				jvmArgumentProviders += JarPath(project, thirdPartyJarsClasspath.get(), "thirdPartyJars")
 				jvmArgumentProviders += JarPath(project, antJarsClasspath.get(), "antJars")

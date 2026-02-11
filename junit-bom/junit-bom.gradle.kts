@@ -33,7 +33,7 @@ publishing.publications.named<MavenPublication>("maven") {
 
 tasks.withType<GenerateMavenPom>().configureEach {
 	doLast {
-		val xml = destination.readText()
+		val xml = destination.asFile.get().readText()
 		require(xml.indexOf("<dependencies>") == xml.lastIndexOf("<dependencies>")) {
 			"BOM must contain exactly one <dependencies> element but contained multiple:\n$destination"
 		}

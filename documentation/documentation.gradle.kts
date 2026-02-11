@@ -368,7 +368,7 @@ tasks {
 		})
 		classpath = files(modularProjects.map { it.sourceSets.main.get().compileClasspath })
 
-		setMaxMemory("1024m")
+		maxMemory = "1024m"
 		options.destinationDirectory = layout.buildDirectory.dir("docs/javadoc").get().asFile
 	}
 
@@ -377,7 +377,7 @@ tasks {
 		group = "Documentation"
 		description = "Fix links to external API specs in the locally aggregated Javadoc HTML files"
 
-		val inputDir = aggregateJavadocs.map { it.destinationDir!! }
+		val inputDir = aggregateJavadocs.map { it.destinationDir.asFile.get() }
 		inputs.property("externalModulesWithoutModularJavadoc", externalModulesWithoutModularJavadoc)
 		from(inputDir.map { File(it, "element-list") }) {
 			// For compatibility with pre JDK 10 versions of the Javadoc tool
