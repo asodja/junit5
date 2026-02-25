@@ -42,7 +42,7 @@ tasks.javadoc {
 }
 
 tasks.named<Jar>("javadocJar").configure {
-	from(tasks.javadoc.map { File(it.destinationDir, "element-list") }) {
+	from(tasks.javadoc.map { File(it.destinationDir.asFile.get(), "element-list") }) {
 		// For compatibility with older tools, e.g. NetBeans 11
 		rename { "package-list" }
 	}

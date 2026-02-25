@@ -135,10 +135,10 @@ tasks.withType<Test>().configureEach {
 	trackOperationSystemAsInput()
 
 	// Avoid passing unnecessary environment variables to the JVM (from GitHub Actions)
-	if (buildParameters.ci) {
-		environment.remove("RUNNER_TEMP")
-		environment.remove("GITHUB_ACTION")
-	}
+//	if (buildParameters.ci) {
+//		environment.remove("RUNNER_TEMP")
+//		environment.remove("GITHUB_ACTION")
+//	}
 
 	jvmArgumentProviders += CommandLineArgumentProvider {
 		listOf(
