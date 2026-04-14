@@ -12,6 +12,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import javax.inject.Inject
+import org.gradle.kotlin.dsl.assign
 
 abstract class UpdateJarAction @Inject constructor(private val operations: ExecOperations): Action<Task> {
 

@@ -23,6 +23,7 @@ import org.gradle.process.ExecOperations
 import junitbuild.extensions.trackOperationSystemAsInput
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
+import org.gradle.kotlin.dsl.assign
 
 @CacheableTask
 abstract class RunConsoleLauncher @Inject constructor(private val execOperations: ExecOperations) : DefaultTask() {

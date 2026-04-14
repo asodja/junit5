@@ -15,6 +15,7 @@ import org.gradle.process.CommandLineArgumentProvider
 import org.gradle.process.ExecOperations
 import java.nio.file.Files
 import javax.inject.Inject
+import org.gradle.kotlin.dsl.assign
 
 @CacheableTask
 abstract class CaptureJavaExecOutput @Inject constructor(private val execOperations: ExecOperations) : DefaultTask() {
